@@ -8,5 +8,19 @@
 
 		<h1>Notícias</h1>
 
+		<table>
+			<tr>
+				<td>Id</td>
+				<td>Título</td>
+				<td>Notícia</td>
+			</tr>
+			<% for ( n of noticias ) { %>
+				<tr>
+					<td><%= n.id_noticia %></td>
+					<td><%= n.titulo %></td>
+					<td><%= n.noticia %></td>
+				</tr>
+			<% } %>
+		</table>
 	</body>
 </html>
