@@ -9,6 +9,7 @@
   "author": "Rafael Magalhães",
   "license": "ISC",
   "dependencies": {
+    "consign": "^0.1.6",
     "ejs": "^2.5.7",
     "express": "^4.15.4",
     "mysql": "^2.14.1"
