@@ -2,18 +2,27 @@
 	<html lang="pt-br">
 		<head>
 			<meta charset="utf-8"/>
-			<title>Formul·rio de cadastro de NotÌcia</title>
+			<title>Formul√°io de cadastro de Not√≠ia</title>
 		</head>
 	<body>
 
-		<h1>Adicionar notÌcia</h1>
+		<h1>Adicionar not√≠ia</h1>
 		<br/>
 
 		<form action="/noticias/salvar" method="post">
-			<label>TÌtulo</label>
-			<input type="text" id="titulo" name="titulo" placeholder="TÌtulo da notÌcia" />
+			<label>T√≠ulo</label>
+			<input type="text" id="titulo" name="titulo" placeholder="T√≠ulo da not√≠ia" />
 			<br/>
-			<label>NotÌcia</label>
+			<label>Resumo</label>
+			<input type="text" id="resumo" name="resumo" placeholder="Resumo da not√≠cia" />
+			<br/>
+			<label>Autor</label>
+			<input type="text" id="autor" name="autor" placeholder="Autor da not√≠cia" />
+			<br/>
+			<label>Data da Not√≠cia</label>
+			<input type="date" id="data_noticia" name="data_noticia" placeholder="Data da not√≠cia" />
+			<br/>
+			<label>Not√≠ia</label>
 			<textarea id="noticia" name="noticia" rows="5" cols="30" /></textarea> 
 			<br/>
 			<input type="submit" value="Enviar">
