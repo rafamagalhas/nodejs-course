@@ -1,21 +1,21 @@
 module.exports = function(application){
 	application.get('/formulario_inclusao_noticias', function(req, res){
-		res.render("admin/form_add_noticia");
+		res.render("admin/form_add_noticia", {validacao : {}, noticia : {}});
 	});
 
 	application.post('/noticias/salvar', function(req, res){
 		var noticia = req.body;
 		
 		req.assert('titulo', 'Título é obrigatório').notEmpty();
-		req.assert('resumo', 'Resumo é obrigatório e deve conter de 10 à 100 caracteres').notEmpty().len(10, 100); 
+		req.assert('resumo', 'Resumo é obrigatório').notEmpty();
+		req.assert('resumo', 'Resumo deve conter de 10 à 100 caracteres').len(10, 100); 
 		req.assert('autor', 'Autor é obrigatória').notEmpty();
-		req.assert('data_noticia', 'Data é obrigatória').notEmpty();//.isDate({format: 'YYYY-MM-DD'});
+		req.assert('data_noticia', 'Data é obrigatória').notEmpty().isDate;
 		req.assert('noticia', 'Conteúdo da notícia é obrigatória').notEmpty();
 
-		var error = req.validationErrors();
-		console.log(error);
-		if (error){
-			res.render("admin/form_add_noticia");
+		var errors = req.validationErrors();
+		if (errors){
+			res.render("admin/form_add_noticia", {validacao : errors, noticia : noticia});
 			return;
 		}
 
