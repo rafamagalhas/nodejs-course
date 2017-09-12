@@ -12,6 +12,5 @@ var connMySql = function(){
 }
 
 module.exports = function() {
-	console.log('Criou o modulo para conexão com o BD');
 	return connMySql;
 }
