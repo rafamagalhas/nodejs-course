@@ -11,7 +11,7 @@ module.exports.authentication = function(application, req, res){
 	var errors = req.validationErrors();
 
 	if(errors){
-		res.render('index', {validation: errors});
+		res.render("index", {validation: errors});
 		return;
 	}
 

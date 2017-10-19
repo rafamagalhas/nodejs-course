@@ -17,8 +17,9 @@ UsersDAO.prototype.userAuthentication = function(user, req, res){
 			collection.find(user).toArray( function(err, result){
 				if(result[0] != undefined){
 					req.session.authorized = true;
+					
 					req.session.user = result[0].user;
-					req.session.pass = result[0].pass;
+					req.session.house = result[0].casa;
 				}
 				
 				if(req.session.authorized){
