@@ -4,14 +4,12 @@ module.exports.jogo = function(application, req, res){
 		return;
 	}
 
-	var invalid_command = 'N';
+	var msg = '';
 
-	if(req.query.invalid_command == 'S'){
-		invalid_command = 'S';
+	if(req.query.msg != ''){
+		msg = req.query.msg;
 	}
-
-	console.log(invalid_command);
-
+	
 	var user = req.session.user;
 	var house = req.session.house;
 
@@ -19,7 +17,7 @@ module.exports.jogo = function(application, req, res){
 	var connection = application.config.dbConnection;
 	var GameDAO = new application.app.models.GameDAO(connection);
 	
-	GameDAO.gameStart(res, user, house, invalid_command);
+	GameDAO.gameStart(res, user, house, msg);
 }
 
 module.exports.exit = function(application, req, res){
@@ -54,14 +52,21 @@ module.exports.villager_action_order = function(application, req, res){
 
 	var formData = req.body;
 
-	req.assert('action', 'Ação deve ser informada').notEmpty();
+	req.assert('actionId', 'Ação deve ser informada').notEmpty();
 	req.assert('qtd', 'Quantidade deve ser informada').notEmpty();
 
 	var errors = req.validationErrors();
 
 	if(errors){
-		res.redirect('game?invalid_command=S');
+		res.redirect('game?msg=E');
 		return;
 	}
-	res.send("opa está funcionando");
+
+	var connection = application.config.dbConnection;
+	var GameDAO = new application.app.models.GameDAO(connection);
+
+	formData.user = req.session.user;
+	GameDAO.action(formData);
+	res.redirect('game?msg=A');
+
 }

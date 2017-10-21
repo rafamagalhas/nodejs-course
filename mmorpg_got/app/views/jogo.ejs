@@ -59,13 +59,17 @@
 		</nav>
 
 	    <div class="container">
-				<% if(invalid_command == 'S') {%>
+				<% if(msg == 'E') {%>
 					<div class="alert alert-danger" id="warning">
 						<strong>Operação inválida, verique se todos os campos foram informados!</strong>
 					</div> 
 				<%}%>
 
-
+				<% if(msg == 'A') {%>
+					<div class="alert alert-info" id="warning">
+						<strong>Ação realizada com sucesso!</strong>
+					</div> 
+				<%}%>
 			<div class="row">
 	    		<div class="col-sm-3 casa">
 					<img src="images/casa_<%=houseImg%>.jpg" />
