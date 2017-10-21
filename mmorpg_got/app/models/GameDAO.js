@@ -19,12 +19,12 @@ GameDAO.prototype.parametersGenerate = function(user){
   });
 }
 
-GameDAO.prototype.gameStart = function(res, user, house){
+GameDAO.prototype.gameStart = function(res, user, house, invalid_command){
   this._connection.open( function(err, mongoclient){
 		mongoclient.collection("game", function(err, collection){
 			collection.find({user: user}).toArray( function(err, result){
         console.log(result);
-        res.render("jogo", {houseImg: house, gameParameters: result[0]});
+        res.render("jogo", {houseImg: house, gameParameters: result[0], invalid_command: invalid_command});
         mongoclient.close;
       });
 		});
