@@ -41,7 +41,12 @@ module.exports.scrolls = function(application, req, res){
 		return;
 	}
 
-	res.render("pergaminhos", {validation: {}});
+	var connection = application.config.dbConnection;
+	var GameDAO = new application.app.models.GameDAO(connection);
+
+	var user = req.session.user;
+
+	GameDAO.getActions(user, res);
 }
 
 module.exports.villager_action_order = function(application, req, res){
@@ -66,7 +71,7 @@ module.exports.villager_action_order = function(application, req, res){
 	var GameDAO = new application.app.models.GameDAO(connection);
 
 	formData.user = req.session.user;
-	GameDAO.action(formData);
+	GameDAO.addAction(formData);
 	res.redirect('game?msg=A');
 
 }
