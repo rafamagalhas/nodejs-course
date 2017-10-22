@@ -48,15 +48,33 @@ GameDAO.prototype.addAction = function(action){
     mongoclient.collection("actions", function(err, collection){
       action.action_ends_at = actionEndsAt(action.actionId);
       collection.insert(action);
-      mongoclient.close();
     });
+
+    mongoclient.collection("game", function(err, collection){
+      var coins_left = null;      
+      switch (parseInt(action.actionId)){
+        case 1: coins_left = -2 * action.qtd; break;
+        case 2: coins_left = -3 * action.qtd; break;
+        case 3: coins_left = -1 * action.qtd; break;
+        case 4: coins_left = -1 * action.qtd; break;
+      }
+
+      collection.update(
+        { user: action.user},
+        { $inc: {coin: coins_left}}
+      );
+
+      mongoclient.close;
+    });    
   });
 }
 
 GameDAO.prototype.getActions = function(user, res){
   this._connection.open( function(err, mongoclient){
 		mongoclient.collection("actions", function(err, collection){
-			collection.find({user: user}).toArray( function(err, result){
+      var date = new Date;
+      var currenteTime = date.getTime();
+			collection.find({user: user, action_ends_at: {$gt: currenteTime}}).toArray( function(err, result){
         res.render("pergaminhos", {actions: result});
         mongoclient.close;
       });

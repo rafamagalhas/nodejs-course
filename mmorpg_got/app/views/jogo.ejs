@@ -40,10 +40,29 @@
 						method: "get",
 						success: function(data){
 							$('#acoes').html(data);
+
+							clearTimeout(timerId);
+							stopwatch();
 						}
 					});					
-				});	
+				});			
 			});
+
+			var timerId = null;	
+			function stopwatch(){
+				$('.seconds_left').each(function(){
+					var seconds = $(this).html();
+					var currentSeconds = parseInt(seconds) - 1;
+					
+					if(currentSeconds < 0 ){
+						window.location.href = "/game?msg=C";
+					} else {
+						$(this).html(currentSeconds);
+					}
+				});
+
+				timerId = setTimeout('stopwatch()', 1000);
+			}
 		</script>
 
 	</head>
@@ -68,6 +87,12 @@
 				<% if(msg == 'A') {%>
 					<div class="alert alert-info" id="warning">
 						<strong>Ação realizada com sucesso!</strong>
+					</div> 
+				<%}%>
+
+				<% if(msg == 'C') {%>
+					<div class="alert alert-info" id="warning">
+						<strong>Senhor, a ação ordenada foi finalizada com sucesso!</strong>
 					</div> 
 				<%}%>
 			<div class="row">

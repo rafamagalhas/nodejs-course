@@ -73,5 +73,4 @@ module.exports.villager_action_order = function(application, req, res){
 	formData.user = req.session.user;
 	GameDAO.addAction(formData);
 	res.redirect('game?msg=A');
-
 }
