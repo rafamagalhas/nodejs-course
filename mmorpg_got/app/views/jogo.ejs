@@ -95,6 +95,12 @@
 						<strong>Senhor, a ação ordenada foi finalizada com sucesso!</strong>
 					</div> 
 				<%}%>
+
+				<% if(msg == 'R') {%>
+					<div class="alert alert-info" id="warning">
+						<strong>Senhor, sua ação foi revogada!</strong>
+					</div> 
+				<%}%>
 			<div class="row">
 	    		<div class="col-sm-3 casa">
 					<img src="images/casa_<%=houseImg%>.jpg" />

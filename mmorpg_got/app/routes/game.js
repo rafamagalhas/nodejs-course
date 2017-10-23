@@ -18,4 +18,8 @@ module.exports = function(application){
 	application.post('/villager_action_order', function(req, res){
 		application.app.controllers.game.villager_action_order(application, req, res);
 	});
+
+	application.get('/action_revogate', function(req, res){
+		application.app.controllers.game.action_revogate(application, req, res);
+	});
 }

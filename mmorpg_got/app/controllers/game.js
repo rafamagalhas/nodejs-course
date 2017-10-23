@@ -74,3 +74,13 @@ module.exports.villager_action_order = function(application, req, res){
 	GameDAO.addAction(formData);
 	res.redirect('game?msg=A');
 }
+
+module.exports.action_revogate = function(application, req, res){
+	var url_query = req.query;
+	
+	var connection = application.config.dbConnection;
+	var GameDAO = new application.app.models.GameDAO(connection);
+
+	var _id = url_query.action_id;
+	GameDAO.actionRevogate(_id, res);
+}
