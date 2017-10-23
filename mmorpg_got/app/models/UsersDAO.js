@@ -23,9 +23,10 @@ UsersDAO.prototype.userAuthentication = function(user, req, res){
 				}
 				
 				if(req.session.authorized){
-					res.redirect("game");
+					res.redirect('game');
 				} else {
-					res.render('index', {validation: {}});
+					var errors = [ { param: 'pass', msg: 'Usuário ou senha incorretos, por favor verifique!', value: '' } ];					
+					res.render('index', {validation: errors, dadosForm: user});
 				}
 			});
 			mongoclient.close;

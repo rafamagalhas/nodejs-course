@@ -14,15 +14,27 @@
 		<!-- incluindo css -->
 		<link href="css/style.css" rel="stylesheet">
 
+		<script>
+				$(document).ready( function(){				
+					$.ajax({
+						url: '/success',
+						method: "get",
+						success: function(data){
+							$('#success').html(data);
+						}
+					});					
+				});	
+		</script>
+
 	</head>
 
 	<body class="body-index">
 
 		<nav class="navbar navbar-default navbar-static-top">
 			<div class="container">
-				<form class="form-inline form-entrar">
+				<form class="form-inline form-entrar" action="return">
 					<div class="form-group">				
-						<button type="button" class="btn btn-success">Voltar</button>
+						<button type="submit" class="btn btn-success">Voltar</button>
 					</div>
 				</form>
 			</div>
@@ -42,112 +54,112 @@
 					</div>
 				<% } %>
 				    		
-			<form class="form-cadastro" action="cadastrar" method="post">
-			
-				<div class="row">
-					<div class="col-xs-4">
-						<div class="form-group">
-							<label for="nome" class="col-sm-2 col-form-label">Nome</label>
-							<input type="nome" value="<%= dadosForm.name %>" class="form-control" id="nome" name="name" placeholder="Nome">
+				<form class="form-cadastro" action="cadastrar" method="post">
+				
+					<div class="row">
+						<div class="col-xs-4">
+							<div class="form-group">
+								<label for="nome" class="col-sm-2 col-form-label">Nome</label>
+								<input type="nome" value="<%= dadosForm.name %>" class="form-control" id="nome" name="name" placeholder="Nome">
+							</div>
+						</div>
+						
+						<div class="col-xs-4">
+							<div class="form-group">
+								<label for="usuario" class="col-sm-2 col-form-label">Usuário</label>
+								<input type="usuario" value="<%= dadosForm.user %>" class="form-control" id="usuario" name="user" placeholder="Usuário">
+							</div>
+						</div>
+						
+						<div class="col-xs-4">
+							<div class="form-group">
+								<label for="senha" class="col-sm-2 col-form-label">Senha</label>
+								<input type="password" value="<%= dadosForm.pass %>" class="form-control" id="senha" name="pass" placeholder="Password">
+							</div>
 						</div>
 					</div>
 					
-					<div class="col-xs-4">
-						<div class="form-group">
-							<label for="usuario" class="col-sm-2 col-form-label">Usuário</label>
-							<input type="usuario" value="<%= dadosForm.user %>" class="form-control" id="usuario" name="user" placeholder="Usuário">
-						</div>
+					<div class="form-group row">
+					
+								<div class="col-xs-2">
+									<img src="images/casa_arryn.jpg" class="img-responsive img-radio">
+							<center>
+								<input type="radio" id="left-item" name="casa" value="arryn"> Casa Arryn
+							</center>
+								</div>
+						
+						<div class="col-xs-2">
+									<img src="images/casa_baratheon.jpg" class="img-responsive img-radio">
+							<center>
+								<input type="radio" id="left-item" name="casa" value="baratheon"> Casa Baratheon
+							</center>
+								</div>
+						
+						<div class="col-xs-2">
+									<img src="images/casa_greyjoy.jpg" class="img-responsive img-radio">
+							<center>
+								<input type="radio" id="left-item" name="casa" value="greyjoy"> Casa Greyjoy
+							</center>
+								</div>
+						
+						<div class="col-xs-2">
+									<img src="images/casa_lannister.jpg" class="img-responsive img-radio">
+							<center>
+								<input type="radio" id="left-item" name="casa" value="lannister"> Casa Lannister
+							</center>
+								</div>
+						
+						<div class="col-xs-2">
+									<img src="images/casa_martell.jpg" class="img-responsive img-radio">
+							<center>
+								<input type="radio" id="left-item" name="casa" value="martell"> Casa Martell
+							</center>
+								</div>
+						
+						<div class="col-xs-2">
+									<img src="images/casa_stark.jpg" class="img-responsive img-radio">
+							<center>
+								<input type="radio" id="left-item" name="casa" value="stark"> Casa Stark
+							</center>
+								</div>
+							</div>
+					
+					<div class="form-group row">
+					
+						<div class="col-xs-3"></div>
+					
+								<div class="col-xs-2">
+									<img src="images/casa_targaryen.jpg" class="img-responsive img-radio">
+							<center>
+								<input type="radio" id="left-item" name="casa" value="targaryen"> Casa Targaryen
+							</center>
+								</div>
+						
+						<div class="col-xs-2">
+									<img src="images/casa_tully.jpg" class="img-responsive img-radio">
+							<center>
+								<input type="radio" id="left-item" name="casa" value="tully"> Casa Tully
+							</center>
+								</div>
+						
+						<div class="col-xs-2">
+									<img src="images/casa_tyrell.jpg" class="img-responsive img-radio">
+							<center>
+								<input type="radio" id="left-item" name="casa" value="tyrell"> Casa Tyrell
+							</center>
+								</div>
+						
+						<div class="col-xs-3"></div>
+					</div>		
+					
+				
+					<div class="form-group row">
+						<button type="submit" class="btn btn-primary">Confirmar cadastro</button>
 					</div>
 					
-					<div class="col-xs-4">
-						<div class="form-group">
-							<label for="senha" class="col-sm-2 col-form-label">Senha</label>
-							<input type="password" value="<%= dadosForm.pass %>" class="form-control" id="senha" name="pass" placeholder="Password">
-						</div>
-					</div>
-				</div>
-				
-				<div class="form-group row">
-				
-        			<div class="col-xs-2">
-        				<img src="images/casa_arryn.jpg" class="img-responsive img-radio">
-						<center>
-							<input type="radio" id="left-item" name="casa" value="arryn"> Casa Arryn
-						</center>
-        			</div>
-					
-					<div class="col-xs-2">
-        				<img src="images/casa_baratheon.jpg" class="img-responsive img-radio">
-						<center>
-							<input type="radio" id="left-item" name="casa" value="baratheon"> Casa Baratheon
-						</center>
-        			</div>
-					
-					<div class="col-xs-2">
-        				<img src="images/casa_greyjoy.jpg" class="img-responsive img-radio">
-						<center>
-							<input type="radio" id="left-item" name="casa" value="greyjoy"> Casa Greyjoy
-						</center>
-        			</div>
-					
-					<div class="col-xs-2">
-        				<img src="images/casa_lannister.jpg" class="img-responsive img-radio">
-						<center>
-							<input type="radio" id="left-item" name="casa" value="lannister"> Casa Lannister
-						</center>
-        			</div>
-					
-					<div class="col-xs-2">
-        				<img src="images/casa_martell.jpg" class="img-responsive img-radio">
-						<center>
-							<input type="radio" id="left-item" name="casa" value="martell"> Casa Martell
-						</center>
-        			</div>
-					
-					<div class="col-xs-2">
-        				<img src="images/casa_stark.jpg" class="img-responsive img-radio">
-						<center>
-							<input type="radio" id="left-item" name="casa" value="stark"> Casa Stark
-						</center>
-        			</div>
-        		</div>
-				
-				<div class="form-group row">
-				
-					<div class="col-xs-3"></div>
-				
-        			<div class="col-xs-2">
-        				<img src="images/casa_targaryen.jpg" class="img-responsive img-radio">
-						<center>
-							<input type="radio" id="left-item" name="casa" value="targaryen"> Casa Targaryen
-						</center>
-        			</div>
-					
-					<div class="col-xs-2">
-        				<img src="images/casa_tully.jpg" class="img-responsive img-radio">
-						<center>
-							<input type="radio" id="left-item" name="casa" value="tully"> Casa Tully
-						</center>
-        			</div>
-					
-					<div class="col-xs-2">
-        				<img src="images/casa_tyrell.jpg" class="img-responsive img-radio">
-						<center>
-							<input type="radio" id="left-item" name="casa" value="tyrell"> Casa Tyrell
-						</center>
-        			</div>
-					
-					<div class="col-xs-3"></div>
-				</div>		
-				
-			
-				<div class="form-group row">
-					<button type="submit" class="btn btn-primary">Confirmar cadastro</button>
-				</div>
-				
 
-			</form>
-					
+				</form>
+						
 	    </div>	
 		
 	</body>

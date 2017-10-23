@@ -14,6 +14,17 @@
 		<!-- incluindo css -->
 		<link href="css/style.css" rel="stylesheet">
 
+		<script>
+				$(document).ready( function(){
+					$('#register').click( function(){
+						window.location.href = '/register';
+					});
+				});	
+
+				setTimeout(function() {
+				 	$('#warning').hide();
+				}, 2500);
+		</script>
 	</head>
 
 	<body class="body-index">
@@ -22,7 +33,7 @@
 			<div class="container">
 
 				<% if (validation.length > 0){ %>
-					<div class="alert alert-danger">
+					<div class="alert alert-danger" id="warning">
 						<ul>
 							<% for(var i = 0; i < validation.length; i++) { %>
 								<li><%= validation[i].msg %></li>
@@ -35,10 +46,10 @@
 
 				<form class="form-inline form-entrar" action="/authentication" method="post">
 					<div class="form-group">				
-						<input type="text" name="user" id="usuario" placeholder="Usuário" class="form-control" autocomplete="off" />
+						<input type="text" name="user" id="usuario" value="<%=dadosForm.user%>" placeholder="Usuário" class="form-control" autocomplete="off" />
 						<input type="password" name="pass" id="senha" placeholder="Senha" class="form-control" />
 						<button type="submit" class="btn btn-success">Entrar</button>
-						<button type="button" class="btn btn-info">Cadastro</button>
+						<button type="button" class="btn btn-info" id="register">Cadastro</button>
 					</div>
 				</form>
 			</div>

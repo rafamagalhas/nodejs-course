@@ -1,5 +1,5 @@
 module.exports.index = function(application, req, res){
-	res.render('index', {validation: {}});
+	res.render('index', {validation: {}, dadosForm: {}});
 }
 
 module.exports.authentication = function(application, req, res){
@@ -9,9 +9,8 @@ module.exports.authentication = function(application, req, res){
 	req.assert('pass', 'Senha deve ser preenchida!').notEmpty();
 
 	var errors = req.validationErrors();
-
 	if(errors){
-		res.render("index", {validation: errors});
+		res.render("index", {validation: errors, dadosForm: formData});
 		return;
 	}
 
@@ -19,4 +18,8 @@ module.exports.authentication = function(application, req, res){
 	var connection = application.config.dbConnection;
 	var UsersDAO = new application.app.models.UsersDAO(connection);
 	UsersDAO.userAuthentication(formData, req, res);
+}
+
+module.exports.register = function(res){
+	res.render('cadastro', {validation: {}, dadosForm: {}});
 }
