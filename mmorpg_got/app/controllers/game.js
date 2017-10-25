@@ -82,5 +82,6 @@ module.exports.action_revogate = function(application, req, res){
 	var GameDAO = new application.app.models.GameDAO(connection);
 
 	var _id = url_query.action_id;
+	var action = url_query.action
 	GameDAO.actionRevogate(_id, res);
 }

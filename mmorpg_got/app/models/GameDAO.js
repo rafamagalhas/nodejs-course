@@ -17,6 +17,17 @@ function actionEndsAt(actionId){
   return date.getTime() + time;
 }
 
+function coinsPaid(actionId, qtd){
+  var coins_paid = null;
+  switch (parseInt(actionId)){
+  case 1: coins_paid = 2 * parseInt(qtd); break;
+  case 2: coins_paid = 3 * parseInt(qtd); break;
+  case 3: coins_paid = 1 * parseInt(qtd); break;
+  case 4: coins_paid = 1 * parseInt(qtd); break;
+  }
+  return coins_paid;
+}
+
 GameDAO.prototype.parametersGenerate = function(user){
   this._connection.open(function(err, mongoclient){
       mongoclient.collection("game", function(err, collection){
@@ -53,17 +64,17 @@ GameDAO.prototype.addAction = function(action){
     });
 
     mongoclient.collection("game", function(err, collection){
-      var coins_left = null;      
+      var coins = null;      
       switch (parseInt(action.actionId)){
-        case 1: coins_left = -2 * action.qtd; break;
-        case 2: coins_left = -3 * action.qtd; break;
-        case 3: coins_left = -1 * action.qtd; break;
-        case 4: coins_left = -1 * action.qtd; break;
+        case 1: coins = -2 * action.qtd; break;
+        case 2: coins = -3 * action.qtd; break;
+        case 3: coins = -1 * action.qtd; break;
+        case 4: coins = -1 * action.qtd; break;
       }
 
       collection.update(
         { user: action.user},
-        { $inc: {coin: coins_left}}
+        { $inc: {coin: coins}}
       );
 
       mongoclient.close;
@@ -85,17 +96,33 @@ GameDAO.prototype.getActions = function(user, res){
 }
 
 GameDAO.prototype.actionRevogate = function(_id, res){
+  var coins_paid = null;
+  var user = '';
   this._connection.open( function(err, mongoclient){
-		mongoclient.collection("actions", function(err, collection){
-			collection.remove(
+    mongoclient.collection("actions", function(err, collection){
+			collection.find({_id: ObjectID(_id)}).toArray( function(err, result){
+        coins_paid = coinsPaid(result[0].actionId, result[0].qtd);
+        user = result[0].user;
+        
+        mongoclient.collection("game", function(err, collection){           
+          collection.update(
+            { user: user},
+            { $inc: {coin: coins_paid}}
+          );
+        });
+      });
+    }); 
+    
+    mongoclient.collection("actions", function(err, collection){           
+      collection.remove(
         {_id: ObjectID(_id)},
         function(err, result){
           res.redirect('/game?msg=R');
           mongoclient.close;
         }
-      );      
+      );
 	  });
-	});	  
+  });     
 }
 
 module.exports = function(){
