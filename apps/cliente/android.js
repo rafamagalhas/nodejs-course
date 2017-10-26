@@ -4,7 +4,7 @@ var options = {
   hostname: 'localhost',
   port: '80',
   path: '/',
-  method: 'post',
+  method: 'get',
   headers: {
     'Accept': 'application/json',
     'Content-type' : 'application/json'
@@ -13,11 +13,11 @@ var options = {
 };
 
 var buffer_body_content = [];
-var html = 'nome=José';
+/*var html = 'nome=José';
 var json = {
   nome: 'José'
 }
-
+*/
 
 var req = http.request(options, function(res){
   res.on('data', function(piece){
@@ -30,5 +30,5 @@ var req = http.request(options, function(res){
   });
 });
 
-req.write(JSON.stringify(json));
+//req.write(JSON.stringify(json));
 req.end();
