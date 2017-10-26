@@ -3,7 +3,7 @@ module.exports = function(application){
 
 		res.format({
 			html: function(){
-				res.send('Bem vindi a sua app NodeJS!');
+				res.send('Bem vindo a sua app NodeJS!');
 			},
 			json: function(){
 				var resp = {
@@ -12,5 +12,10 @@ module.exports = function(application){
 				res.json(resp);
 			}
 		});
+	});
+
+	application.post('/', function(req, res){
+		var data = req.body;
+		res.send(data);
 	});
 }

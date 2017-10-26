@@ -4,14 +4,22 @@ var options = {
   hostname: 'localhost',
   port: '80',
   path: '/',
+  method: 'post',
   headers: {
-    'Accept': 'application/json'
+    'Accept': 'application/json',
+    'Content-type' : 'application/json'
+
   }
 };
 
 var buffer_body_content = [];
-http.get(options, function(res){
+var html = 'nome=José';
+var json = {
+  nome: 'José'
+}
 
+
+var req = http.request(options, function(res){
   res.on('data', function(piece){
     buffer_body_content.push(piece);
   });
@@ -20,5 +28,7 @@ http.get(options, function(res){
     var content_resp = Buffer.concat(buffer_body_content).toString();
     console.log(content_resp);
   });
-
 });
+
+req.write(JSON.stringify(json));
+req.end();
