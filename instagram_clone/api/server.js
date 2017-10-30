@@ -1,6 +1,7 @@
 var express = require('express'),
     bodyParser = require('body-parser'),
-    mongodb = require('mongodb');
+    mongodb = require('mongodb'),
+    objectId = require('mongodb').ObjectId;
 
 var app = express();
 
@@ -22,9 +23,9 @@ app.get('/', function(req, res){
   res.send({msg: 'Olá'});
 });
 
+// POST - insert data
 app.post('/api', function(req, res){
   var data = req.body;
-
   db.open( function(err, mongoclient){
     mongoclient.collection('posts', function(err, collection){
       collection.insert(data, function(err, result){
@@ -33,9 +34,42 @@ app.post('/api', function(req, res){
         } else{
           res.json(result);
         }
-        mongoclient.close;
+        mongoclient.close();
       });
     });
   });
 });
+
+// GET find data
+app.get('/api', function(req, res){
+  db.open( function(err, mongoclient){
+    mongoclient.collection('posts', function(err, collection){
+      collection.find().toArray(function(err, results){
+        if(err){
+          res.json(err);
+        } else{
+          res.json(results);
+        }
+        mongoclient.close();
+      });        
+    });
+  });
+});
+
+// GET by ID to find a specific Id
+app.get('/api/:id', function(req, res){
+  db.open( function(err, mongoclient){
+    mongoclient.collection('posts', function(err, collection){
+      collection.find(objectId(req.params.id)).toArray(function(err, results){
+        if(err){
+          res.json(err);
+        } else{
+          res.json(results);
+        }
+        mongoclient.close();
+      });        
+    });
+  });
+});
+
 
