@@ -16,16 +16,15 @@
 
 		<script>
 			$(document).ready(function(){
-
+				
 				function posts_load(){
-					var xhr = new XMLHttpRequest();	
-					
+					var xhr = new XMLHttpRequest();
 					xhr.open("GET", "http://localhost:8080/api");
-					
+
 					xhr.onload = function(){
 						if(xhr.status === 200){
 							var data = $.parseJSON(xhr.responseText);
-							
+
 							for(i = 0; i < data.length; i++){
 								$("#container_timeline").append(
 									'<div class="publicacao">' +
@@ -38,7 +37,7 @@
 											'<button class="btn btn-default btn_postagem" value="'+data[i]._id+'" type="button">Comentar</button>' +
 										'</div>' +
 									'</div>'
-								)	
+								)		
 							}
 
 							$('.btn_postagem').click( function(){
@@ -52,6 +51,7 @@
 							});
 						}
 					}
+					xhr.send();
 				}
 
 				posts_load();

@@ -98,7 +98,8 @@ app.get('/api/:id', function(req, res){
 
 // PUT - data updated
 app.put('/api/:id', function(req, res){
-  db.open( function(err, mongoclient){
+  res.send('Estamos pronto para comentar!');
+ /* db.open( function(err, mongoclient){
     mongoclient.collection('posts', function(err, collection){
       collection.update(
         { _id:  objectId(req.params.id)},
@@ -114,7 +115,7 @@ app.put('/api/:id', function(req, res){
         }
       );        
     });
-  });
+  });*/
 });
 
 app.get('/images/:img', function(req, res){
