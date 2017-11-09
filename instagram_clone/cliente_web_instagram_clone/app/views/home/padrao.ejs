@@ -32,12 +32,25 @@
 											data[i].title +
 										'</span>' +
 										'<img src="http://localhost:8080/images/'+data[i].img_post+'"/>'+
+										'<div class="comentarios" id="comentarios_'+data[i]._id+'"></div>' +
 										'<div class="comentar">' +
 											'<input type="text" class="form-control input_comentario" id="post_'+data[i]._id+'" placeholder="Adicione um comentário...">' +
 											'<button class="btn btn-default btn_postagem" value="'+data[i]._id+'" type="button">Comentar</button>' +
 										'</div>' +
 									'</div>'
-								)		
+								);
+										
+								if(data[i].comments != undefined){
+									var comments = data[i].comments;
+									for(j = 0; j < comments.length; j++){									
+										$("#comentarios_"+ data[i]._id).append(
+											'<div class="txt_comentario">' +
+												comments[j].comment + 
+											'</div>'
+										);
+									}
+								}
+								
 							}
 
 							$('.btn_postagem').click( function(){
@@ -50,8 +63,10 @@
 								xhr.setRequestHeader("Content-Type", "application/json");
 
 								xhr.onload = function(){
-									alert(xhr.responseText);
-								}
+									if(xhr.status === 200){
+										window.location.href = '/home';
+									}
+								};
 
 								xhr.send(JSON.stringify({comment : comment}));
 							});
