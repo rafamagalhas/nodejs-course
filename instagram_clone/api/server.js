@@ -13,14 +13,25 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(multiparty());
 
+app.use( function(req, res, next){
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+  res.setHeader("Access-Control-Allow-Headers", "content-type");
+  res.setHeader("Access-Control-Allow-Credentials", true);
+
+  next();
+});
+
+var port = 8080;
+
+app.listen(port);
+
 var db = new mongodb.Db(
   'instagram',
   new mongodb.Server('localhost', 27017, {}),
   {}
 );
 
-var port = 8080;
-app.listen(port);
 console.log('O servidor está escutnado na porta ' + port);
 
 app.get('/', function(req, res){
@@ -28,9 +39,7 @@ app.get('/', function(req, res){
 });
 
 // POST - insert data
-app.post('/api', function(req, res){
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  
+app.post('/api', function(req, res){ 
   var date = new Date();
   time_stamp = date.getTime();
   var url_image = time_stamp + '_' + req.files.file.originalFilename;
@@ -65,7 +74,6 @@ app.post('/api', function(req, res){
 
 // GET find data
 app.get('/api', function(req, res){
-  res.setHeader("Access-Control-Allow-Origin", "*");
   db.open( function(err, mongoclient){
     mongoclient.collection('posts', function(err, collection){
       collection.find().toArray(function(err, results){
@@ -96,28 +104,6 @@ app.get('/api/:id', function(req, res){
   });
 });
 
-// PUT - data updated
-app.put('/api/:id', function(req, res){
-  res.send('Estamos pronto para comentar!');
- /* db.open( function(err, mongoclient){
-    mongoclient.collection('posts', function(err, collection){
-      collection.update(
-        { _id:  objectId(req.params.id)},
-        {$set: {titulo: req.body.titulo}},
-        {},
-        function(err, result){
-          if(err){
-            res.json(err);
-          } else{
-            res.json(result);
-          }
-          mongoclient.close();
-        }
-      );        
-    });
-  });*/
-});
-
 app.get('/images/:img', function(req, res){
   var image = req.params.img;
 
@@ -132,6 +118,33 @@ app.get('/images/:img', function(req, res){
     });
     res.end(content);
   })
+});
+
+// PUT - data updated
+app.put('/api/:id', function(req, res){
+  db.open( function(err, mongoclient){
+    mongoclient.collection('posts', function(err, collection){
+      collection.update(
+        { _id: objectId(req.params.id)}, 
+        { $push: {
+            comments: {
+                id_comment: new objectId(),
+                comment: req.body.comment
+            }
+          }
+        }, 
+        {},
+        function(err, result){
+          if(err){
+            res.json(err);
+          } else {
+            res.json(result);
+          }
+          mongoclient.close();
+        }
+      );
+    });
+  });
 });
 
 // DELETE - data removeded
