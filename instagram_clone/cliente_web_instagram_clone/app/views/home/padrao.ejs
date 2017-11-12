@@ -45,6 +45,7 @@
 									for(j = 0; j < comments.length; j++){									
 										$("#comentarios_"+ data[i]._id).append(
 											'<div class="txt_comentario">' +
+												'<button type="button" value="'+comments[j].id_comment+'" class="btn btn-default btn_remover_postagem">X</button>' +
 												comments[j].comment + 
 											'</div>'
 										);
@@ -53,6 +54,21 @@
 								
 							}
 
+							$('.btn_remover_postagem').click( function(){
+								var comment_id = this.value;
+
+								var xhr = new XMLHttpRequest();	
+								xhr.open("DELETE", "http://localhost:8080/api/"+ comment_id);
+								
+								xhr.onload = function(){
+									if(xhr.status === 200){
+										window.location.href = '/home';
+									}
+								};
+
+								xhr.send();
+							});
+							
 							$('.btn_postagem').click( function(){
 								var id = this.value;
 								var id_post = 'post_'+id;
